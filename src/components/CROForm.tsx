@@ -88,7 +88,7 @@ export default function CROForm({ tourDetail, config, activeType }: CROFormProps
       groupSize,
       email,
       phone,
-      name,
+      name: name || 'Valued Traveler',
       capturedAt: new Date().toLocaleTimeString()
     };
 
@@ -154,7 +154,10 @@ export default function CROForm({ tourDetail, config, activeType }: CROFormProps
                 <Calendar className="w-4 h-4" />
               </span>
               <input
-                type="date"
+                type="text"
+                onFocus={(e) => { e.currentTarget.type = 'date'; }}
+                onBlur={(e) => { if (!e.currentTarget.value) e.currentTarget.type = 'text'; }}
+                placeholder="MM/DD/YYYY"
                 value={date}
                 id="input-tour-date"
                 onChange={(e) => setDate(e.target.value)}
@@ -168,7 +171,7 @@ export default function CROForm({ tourDetail, config, activeType }: CROFormProps
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-gray-600 flex items-center gap-1">
                   <Users className="w-4 h-4 text-gray-400" />
-                  Group Weight / Attendees
+                  Number of people
                 </span>
                 <span className="text-xs font-mono font-bold text-[#1B3A5B] bg-gray-100 px-2 py-0.5 rounded-md">
                   {groupSize} {groupSize === 1 ? 'person' : 'people'}
@@ -215,9 +218,9 @@ export default function CROForm({ tourDetail, config, activeType }: CROFormProps
                 type="button"
                 onClick={handleNextStep1}
                 id="btn-step1-next"
-                className="flex-1 bg-[#2E8B8B] hover:bg-[#256e6e] text-white py-3 px-4 rounded-xl font-sans font-bold text-sm tracking-wide shadow-lg shadow-[#2E8B8B]/25 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 uppercase cursor-pointer"
+                className="flex-1 bg-[#2E8B8B] hover:bg-[#256e6e] text-white py-3 px-4 rounded-xl font-sans font-bold text-sm tracking-wide shadow-lg shadow-[#2E8B8B]/25 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 cursor-pointer"
               >
-                Lock In Dates & Size →
+                Hold my spots
               </button>
             </div>
           </div>
@@ -233,27 +236,6 @@ export default function CROForm({ tourDetail, config, activeType }: CROFormProps
             </div>
 
             <div className="space-y-4 mb-5">
-              {/* Full Name Input */}
-              <div>
-                <label className="block text-xs font-bold font-sans text-gray-500 uppercase tracking-wider mb-1">
-                  Name *
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                    <User className="w-4 h-4" />
-                  </span>
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    id="input-lead-name"
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Enter your name"
-                    className="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#2E8B8B]/20 focus:border-[#2E8B8B] outline-none text-[#1B3A5B] bg-white transition-all"
-                  />
-                </div>
-              </div>
-
               {/* Email Input */}
               <div>
                 <label className="block text-xs font-bold font-sans text-gray-500 uppercase tracking-wider mb-1">
@@ -294,7 +276,28 @@ export default function CROForm({ tourDetail, config, activeType }: CROFormProps
                     className="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#2E8B8B]/20 focus:border-[#2E8B8B] outline-none text-[#1B3A5B] bg-white transition-all"
                   />
                 </div>
-                <p className="text-[10px] text-gray-400 mt-1">So our local team can reach you faster</p>
+                <p className="text-[10px] text-gray-400 mt-1">Our Cabo team will text you a confirmation</p>
+              </div>
+
+              {/* Name Input */}
+              <div>
+                <label className="block text-xs font-bold font-sans text-gray-500 uppercase tracking-wider mb-1">
+                  Name *
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                    <User className="w-4 h-4" />
+                  </span>
+                  <input
+                    type="text"
+                    required
+                    value={name}
+                    id="input-lead-name"
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Enter your name"
+                    className="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#2E8B8B]/20 focus:border-[#2E8B8B] outline-none text-[#1B3A5B] bg-white transition-all"
+                  />
+                </div>
               </div>
             </div>
 
@@ -317,9 +320,9 @@ export default function CROForm({ tourDetail, config, activeType }: CROFormProps
               <button
                 type="submit"
                 id="btn-lead-submit"
-                className="flex-1 bg-[#2E8B8B] hover:bg-[#206161] text-white py-3 px-4 rounded-xl font-sans font-bold text-sm tracking-wide shadow-lg shadow-[#2E8B8B]/20 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 uppercase cursor-pointer"
+                className="flex-1 bg-[#2E8B8B] hover:bg-[#206161] text-white py-3 px-4 rounded-xl font-sans font-bold text-sm tracking-wide shadow-lg shadow-[#2E8B8B]/20 hover:shadow-xl hover:scale-[1.01] transition-all duration-200 cursor-pointer"
               >
-                Avoid Missing Out: Lock Spots →
+                Confirm my spots
               </button>
             </div>
 
@@ -341,9 +344,7 @@ export default function CROForm({ tourDetail, config, activeType }: CROFormProps
             </h3>
 
             <p className="text-gray-500 text-xs leading-relaxed mb-4">
-              We've received your request for <span className="font-bold text-gray-800">{groupSize} spots</span> for <span className="font-semibold text-[#2E8B8B]">{date}</span>.
-              <br /><br />
-              Our local concierge is reaching out to <span className="font-bold text-gray-800">{tourDetail.operatorName}</span> right now.
+              We've received your request for <span className="font-bold text-gray-800">{groupSize} spots</span> for <span className="font-semibold text-[#2E8B8B]">{date}</span>. Our local concierge is reaching out to <span className="font-bold text-gray-800">{tourDetail.operatorName}</span> right now.
             </p>
 
             {/* Context summary list */}
@@ -369,11 +370,11 @@ export default function CROForm({ tourDetail, config, activeType }: CROFormProps
               <div className="flex items-start gap-2.5">
                 <span className="text-xl shrink-0" role="img" aria-label="Ticket">🎫</span>
                 <div className="space-y-1">
-                  <h4 className="text-xs font-black text-[#1B3A5B] uppercase tracking-wider">
-                    Make the most of your {date ? formatTravelDate(date) : 'June 12'} in Cabo
+                  <h4 className="text-xs font-black text-[#1B3A5B] tracking-wide">
+                    While you are in Cabo on {date ? formatTravelDate(date) : 'June 18'}, save on restaurants and beach clubs.
                   </h4>
                   <p className="text-[11px] text-gray-500 leading-relaxed font-medium">
-                    Save on restaurants & beach clubs with the Cabo Passport — from $29 USD
+                    Save on restaurants and beach clubs with the Cabo Passport, from $29 USD
                   </p>
                 </div>
               </div>
@@ -392,7 +393,7 @@ export default function CROForm({ tourDetail, config, activeType }: CROFormProps
               className="w-full border border-gray-200 hover:bg-gray-50 text-gray-600 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5" />
-              <span>Modify or Test Another Class</span>
+              <span>Modify my request</span>
             </button>
           </div>
         );
