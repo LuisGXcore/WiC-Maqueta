@@ -1,0 +1,6 @@
+{
+  "name": "What's in Cabo",
+  "description": "What's in Cabo (WiC) — A curated travel directory for Los Cabos, Mexico. Complete with luxury hotels, bespoke tours, gastronomy spots, attractions, and active savings guides.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
